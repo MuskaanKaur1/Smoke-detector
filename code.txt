@@ -1,0 +1,24 @@
+const int mq2pin = A0;  // MQ-2 sensor analog pin (changed to A0)
+const int buzpin = 3;  // Buzzer pin
+const int smokeThreshold = 400;  // Adjust threshold based on testing for smoke
+
+int mq2value = 0;  // Initialize MQ-2 sensor reading
+
+void setup() {
+  Serial.begin(9600);  // Start serial communication
+  pinMode(mq2pin, INPUT);  // Set MQ-2 sensor pin as input
+  pinMode(buzpin, OUTPUT);  // Set buzzer pin as output
+}
+
+void loop() {
+  mq2value = analogRead(mq2pin);  // Read analog data from MQ-2 sensor
+  Serial.println(mq2value);  // Output the reading to the serial monitor for debugging
+
+  if (mq2value >= smokeThreshold) {  // If smoke level exceeds threshold
+    tone(buzpin, 1000);  // Turn on buzzer with a frequency of 1000 Hz
+    delay(1000);  // Wait for 1 second
+  } 
+  else {
+    noTone(buzpin);  // Turn off the buzzer
+  }
+}
